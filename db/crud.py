@@ -1,8 +1,9 @@
 import uuid
 from sqlalchemy import select
-from .database import database
-from .models import cheese_table
-from ..schemas import Cheese  # Імпортуємо Pydantic-схему
+from db.database import database
+from db.models import cheese_table
+from schemas import Cheese
+
 
 async def create_cheese(cheese: Cheese):
     query = cheese_table.insert().values(
@@ -16,9 +17,11 @@ async def create_cheese(cheese: Cheese):
     )
     await database.execute(query)
 
+
 async def get_cheese_by_id(cheese_id: str):
     query = select(cheese_table).where(cheese_table.c.id == cheese_id)
     return await database.fetch_one(query)
+
 
 async def get_cheeses(limit: int, offset: int):
     query = select(cheese_table).limit(limit).offset(offset)

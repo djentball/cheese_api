@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import Table, Column, String, Float, Integer, Boolean
 from sqlalchemy.dialects.postgresql import UUID
-from database import metadata
+from db.database import metadata
 
 cheese_table = Table(
     "cheeses",

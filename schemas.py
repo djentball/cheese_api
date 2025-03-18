@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field
+import uuid
 from uuid import UUID
 from typing import Optional, List
 
 
 class Cheese(BaseModel):
-    id: UUID = Field(default_factory=UUID, title="Унікальний ідентифікатор сиру")
+    id: UUID = Field(default_factory=uuid.uuid4, title="Унікальний ідентифікатор сиру")  # ✅ Оновлено
     name: str
     country: str
     fat_content: float
