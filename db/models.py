@@ -24,3 +24,13 @@ categories_table = Table(
     Column("description", String, nullable=True),
     Column("image_url", String),
 )
+
+blogs_table = Table(
+    "blogs",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("name", String, nullable=False),
+    Column("short_description", String, nullable=True),
+    Column("description", String, nullable=True),
+    Column("image_url", String),
+)

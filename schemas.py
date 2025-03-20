@@ -34,3 +34,18 @@ class CategoriesListResponse(BaseModel):
     limit: int
     offset: int
     categories: List[Categories]
+
+
+class Blogs(BaseModel):
+    id: UUID = Field(default_factory=uuid.uuid4, title="Унікальний ідентифікатор блогу")
+    name: str
+    short_description: Optional[str]
+    description: Optional[str]
+    image_url: str | None = None
+
+
+class BlogsListResponse(BaseModel):
+    total: int
+    limit: int
+    offset: int
+    blogs: List[Blogs]
