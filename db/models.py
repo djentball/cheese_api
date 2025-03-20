@@ -13,4 +13,14 @@ cheese_table = Table(
     Column("age_months", Integer, nullable=False),
     Column("is_pasteurized", Boolean, nullable=False),
     Column("description", String, nullable=True),
+    Column("image_url", String),
+)
+
+categories_table = Table(
+    "categories",
+    metadata,
+    Column("id", String, primary_key=True, default=lambda: str(uuid.uuid4())),
+    Column("name", String, nullable=False),
+    Column("description", String, nullable=True),
+    Column("image_url", String),
 )
