@@ -5,22 +5,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
 
-    - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      with:
-        server: ${{ secrets.HOST }}
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASS }}
-        local-dir: ./
-        server-dir: /www/cheese_api/
-        protocol: ftps
-        port: 21
-        passive: true
-#        security: strict
+    - name: 📂 Install lftp
+      run: sudo apt-get update && sudo apt-get install -y lftp
+
+    - name: 🔄 Deploy via lftp
+      run: |
+        lftp -u "${{ secrets.NAME }},${{ secrets.PASS }}" ${{ secrets.HOST }} <<EOF
+        set ftp:ssl-force true
+        set ftp:ssl-protect-data true
+        mirror -R ./ /www/cheese_api/
+        quit
+        EOF
