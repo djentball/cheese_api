@@ -11,10 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
+
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@4.3.2
       with:
@@ -23,6 +20,6 @@ jobs:
         password: ${{ secrets.PASS }}
         local-dir: ./
         server-dir: /www/cheese_api/
-        protocol: ftps
-        port: 990
+        protocol: ftp
+        port: 21
 #        security: strict
