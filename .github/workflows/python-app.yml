@@ -24,3 +24,4 @@ jobs:
         local-dir: ./
         server-dir: /www/cheese_api/
         protocol: ftps
+        port: 21
