@@ -25,4 +25,4 @@ jobs:
         server-dir: /www/cheese_api/
         protocol: ftps-legacy
         port: 21
-        security: strict
+#        security: strict
