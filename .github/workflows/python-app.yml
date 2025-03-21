@@ -24,4 +24,3 @@ jobs:
         local-dir: ./
         server-dir: /www/cheese_api/
         protocol: ftps
-        timeout: 60000
