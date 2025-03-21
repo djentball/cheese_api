@@ -23,6 +23,6 @@ jobs:
         password: ${{ secrets.PASS }}
         local-dir: ./
         server-dir: /www/cheese_api/
-        protocol: ftps
+        protocol: ftps-legacy
         port: 21
         security: strict
