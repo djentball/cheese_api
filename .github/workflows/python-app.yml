@@ -33,16 +33,14 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: Deploy via FTPS
-      uses: lukaszraczylo/ftp-deployer@v1
-      with:
-        sftp: false
-        ftps: true
-        host: ${{ secrets.HOST }}
-        port: 21
-        username: ${{ secrets.NAME }}
-        password: ${{ secrets.PASS }}
-        local: ./
-        remote: /www/cheese_api/
+    - name: 🔄 Deploy via lftp
+      run: |
+        lftp -u "${{ secrets.NAME }},${{ secrets.PASS }}" ${{ secrets.HOST }} <<EOF
+        set ftp:ssl-force true
+        set ftp:ssl-protect-data true
+        mirror -R --only-newer --parallel=5 ./ /www/cheese_api/
+        quit
+        EOF
+    
 
 
