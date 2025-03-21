@@ -1,19 +1,40 @@
-name: Test
+#name: Test
 
-on:
-  push:
-    branches: [ "main" ]
+#on:
+#  push:
+#    branches: [ "main" ]
+#
+#jobs:
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - uses: actions/checkout@v4
+#
+#    - name: Deploy via FTP
+#      uses: SamKirkland/FTP-Deploy-Action@4.3.5
+#      with:
+#        server: ${{ secrets.HOST }}
+#        username: ${{ secrets.NAME }}
+#        password: ${{ secrets.PASS }}
+#        local-dir: ./
+#        server-dir: /www/cheese_api/
+#        protocol: ftps
+#        security: strict
 
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  build:
-
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
 
-    - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.5
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.HOST }}
         username: ${{ secrets.NAME }}
@@ -21,4 +42,4 @@ jobs:
         local-dir: ./
         server-dir: /www/cheese_api/
         protocol: ftps
-#        security: strict
+#        port: 1234
