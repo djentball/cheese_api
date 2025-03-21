@@ -33,13 +33,16 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+    - name: Deploy via FTPS
+      uses: lukaszraczylo/ftp-deployer@v1
       with:
-        server: ${{ secrets.HOST }}
+        sftp: false
+        ftps: true
+        host: ${{ secrets.HOST }}
+        port: 21
         username: ${{ secrets.NAME }}
         password: ${{ secrets.PASS }}
-        local-dir: ./
-        server-dir: /www/cheese_api/
-        protocol: ftps
-#        port: 1234
+        local: ./
+        remote: /www/cheese_api/
+
+
