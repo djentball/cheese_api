@@ -1,27 +1,3 @@
-#name: Test
-
-#on:
-#  push:
-#    branches: [ "main" ]
-#
-#jobs:
-#  build:
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#    - uses: actions/checkout@v4
-#
-#    - name: Deploy via FTP
-#      uses: SamKirkland/FTP-Deploy-Action@4.3.5
-#      with:
-#        server: ${{ secrets.HOST }}
-#        username: ${{ secrets.NAME }}
-#        password: ${{ secrets.PASS }}
-#        local-dir: ./
-#        server-dir: /www/cheese_api/
-#        protocol: ftps
-#        security: strict
 
 on: push
 name: 🚀 Deploy website on push
