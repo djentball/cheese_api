@@ -20,6 +20,7 @@ jobs:
         password: ${{ secrets.PASS }}
         local-dir: ./
         server-dir: /www/cheese_api/
-        protocol: ftp
+        protocol: ftps
         port: 21
+        passive: true
 #        security: strict
