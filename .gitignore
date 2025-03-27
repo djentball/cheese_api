@@ -1,5 +1,7 @@
 .idea
 db/cheese.db
+db/cheese_copy.db
+db/backup.sql
 pycache
 alembic
 alembic.ini
