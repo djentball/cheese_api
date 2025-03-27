@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from uuid import UUID
 from db import crud
-from schemas import Categories, CategoriesListResponse
+from schemas import Categories, CategoriesListResponse, CheeseListResponse
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
@@ -43,3 +43,8 @@ async def get_categories(
     offset: int = Query(0, ge=0)
 ):
     return await crud.get_categories(limit, offset)
+
+
+@router.get("/{category_id}/cheeses", response_model=CheeseListResponse)
+async def get_cheeses_by_category(category_id: str, limit: int = Query(10, ge=1, le=100), offset: int = Query(0, ge=0)):
+    return await crud.get_cheeses_by_category(category_id, limit, offset)

@@ -13,6 +13,7 @@ class Cheese(BaseModel):
     is_pasteurized: bool
     description: Optional[str]
     image_url: str | None = None
+    category_id: UUID  # Додаємо зв'язок з категорією
 
 
 class CheeseListResponse(BaseModel):

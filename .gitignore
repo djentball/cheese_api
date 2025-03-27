@@ -1,3 +1,5 @@
 .idea
 db/cheese.db
 pycache
+alembic
+alembic.ini

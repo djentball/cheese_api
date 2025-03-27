@@ -8,17 +8,28 @@ from uuid import UUID
 
 async def create_cheese(cheese: Cheese):
     query = cheese_table.insert().values(
-        id=str(cheese.id) if cheese.id else str(uuid.uuid4()),  # Використовуємо наданий ID або генеруємо новий
+        id=str(cheese.id) if cheese.id else str(uuid.uuid4()),
         name=cheese.name,
         country=cheese.country,
         fat_content=cheese.fat_content,
         age_months=cheese.age_months,
         is_pasteurized=cheese.is_pasteurized,
         description=cheese.description,
-        image_url=cheese.image_url
+        image_url=cheese.image_url,
+        category_id=str(cheese.category_id)  # Зберігаємо категорію
     )
     await database.execute(query)
     return cheese
+
+
+async def get_cheeses_by_category(category_id: str, limit: int, offset: int):
+    query = select(cheese_table).where(cheese_table.c.category_id == category_id).limit(limit).offset(offset)
+    cheeses = await database.fetch_all(query)
+
+    total_query = select(func.count()).where(cheese_table.c.category_id == category_id)
+    total = await database.fetch_one(total_query)
+
+    return {"total": total[0] if total else 0, "limit": limit, "offset": offset, "cheeses": cheeses}
 
 
 async def get_cheese_by_id(cheese_id: str):
