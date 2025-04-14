@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
 from db.database import database
 from routes import cheese, categories, blogs
 from db.models_orm import Base
@@ -18,10 +20,10 @@ async def lifespan(app: FastAPI):
     from db.database import engine
     register_admin(app, engine)
 
-    from fastapi.routing import APIRoute
-    for route in app.routes:
-        if isinstance(route, APIRoute):
-            print(f"{route.path} -> {route.name}")
+    # from fastapi.routing import APIRoute
+    # for route in app.routes:
+    #     if isinstance(route, APIRoute):
+    #         print(f"{route.path} -> {route.name}")
 
     yield
 
