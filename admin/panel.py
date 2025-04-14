@@ -24,7 +24,7 @@ class BlogAdmin(ModelView, model=Blog):
 
 def register_admin(app, engine):
     authentication_backend = AdminAuth(secret_key=os.getenv("SECRET_KEY"))
-    admin = Admin(app, engine, authentication_backend=authentication_backend, base_url="/admin" )
+    admin = Admin(app, engine, authentication_backend=authentication_backend, base_url="/api/admin")
     admin.add_view(CheeseAdmin)
     admin.add_view(CategoryAdmin)
     admin.add_view(BlogAdmin)
