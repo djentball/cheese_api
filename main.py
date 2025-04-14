@@ -13,7 +13,18 @@ Base.metadata.create_all(bind=engine)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await database.connect()
+
+    from admin.panel import register_admin
+    from db.database import engine
+    register_admin(app, engine)
+
+    from fastapi.routing import APIRoute
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            print(f"{route.path} -> {route.name}")
+
     yield
+
     await database.disconnect()
 
 app = FastAPI(lifespan=lifespan)
@@ -33,10 +44,11 @@ app.include_router(cheese.router)
 app.include_router(categories.router)
 app.include_router(blogs.router)
 
-register_admin(app, engine)
+# register_admin(app, engine)
+
 
 if __name__ == '__main__':
     import uvicorn
 
-    uvicorn.run(app, host="::", port=8355)
-    # uvicorn.run(app)
+    # uvicorn.run(app, host="::", port=8355)
+    uvicorn.run(app)
