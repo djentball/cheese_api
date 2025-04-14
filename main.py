@@ -38,5 +38,5 @@ register_admin(app, engine)
 if __name__ == '__main__':
     import uvicorn
 
-    # uvicorn.run(app, host="::", port=8355)
-    uvicorn.run(app)
+    uvicorn.run(app, host="::", port=8355)
+    # uvicorn.run(app)
