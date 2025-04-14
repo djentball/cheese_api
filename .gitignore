@@ -5,3 +5,4 @@ db/backup.sql
 pycache
 alembic
 alembic.ini
+.env
