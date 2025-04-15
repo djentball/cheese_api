@@ -10,13 +10,9 @@ from db.database import engine
 from admin.panel import register_admin
 import logging
 
-
 # Налаштування базового логування
 logging.basicConfig(level=logging.INFO)
-
-# Логування доступу до API (uvicorn access логгер)
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,28 +20,23 @@ Base.metadata.create_all(bind=engine)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await database.connect()
-
-    from admin.panel import register_admin
-    from db.database import engine
-    register_admin(app, engine)
-
-    from fastapi.routing import APIRoute
-    for route in app.routes:
-        if isinstance(route, APIRoute):
-            print(f"{route.path} -> {route.name}")
-
     yield
-
     await database.disconnect()
 
+
 app = FastAPI(lifespan=lifespan, root_path="/api")
+
+# Підключення статики для SQLAdmin
 app.mount(
-    "/static",  # <- без /api
+    "/static",
     StaticFiles(directory="/home/api-aio/.local/lib/python3.12/site-packages/sqladmin/statics"),
     name="static"
 )
 
+# Реєстрація адмінки
+register_admin(app, engine)
 
+# Підключення CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -54,16 +45,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# Роутери
 app.include_router(cheese.router)
 app.include_router(categories.router)
 app.include_router(blogs.router)
-
-# register_admin(app, engine)
-
-
-# if __name__ == '__main__':
-#     import uvicorn
-#
-#     uvicorn.run(app, host="::", port=8355)
-    # uvicorn.run(app)
