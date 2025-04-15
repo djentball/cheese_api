@@ -1,9 +1,9 @@
 import os
-
+from dotenv import load_dotenv
 from sqladmin import Admin, ModelView
+
 from admin.auth import AdminAuth
 from db.models_orm import Cheese, Category, Blog
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -23,6 +23,7 @@ class BlogAdmin(ModelView, model=Blog):
 
 
 def register_admin(app, engine):
+    print("✅ Initializing SQLAdmin with base_url=/api/admin")
     authentication_backend = AdminAuth(secret_key=os.getenv("SECRET_KEY"))
     admin = Admin(app, engine, authentication_backend=authentication_backend, base_url="/api/admin")
     admin.add_view(CheeseAdmin)
