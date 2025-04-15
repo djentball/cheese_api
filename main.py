@@ -8,6 +8,15 @@ from routes import cheese, categories, blogs
 from db.models_orm import Base
 from db.database import engine
 from admin.panel import register_admin
+import logging
+
+
+# Налаштування базового логування
+logging.basicConfig(level=logging.INFO)
+
+# Логування доступу до API (uvicorn access логгер)
+uvicorn_access_logger = logging.getLogger("uvicorn.access")
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -53,8 +62,8 @@ app.include_router(blogs.router)
 # register_admin(app, engine)
 
 
-if __name__ == '__main__':
-    import uvicorn
-
-    uvicorn.run(app, host="::", port=8355)
+# if __name__ == '__main__':
+#     import uvicorn
+#
+#     uvicorn.run(app, host="::", port=8355)
     # uvicorn.run(app)
