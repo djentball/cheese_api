@@ -29,10 +29,10 @@ async def lifespan(app: FastAPI):
     from db.database import engine
     register_admin(app, engine)
 
-    # from fastapi.routing import APIRoute
-    # for route in app.routes:
-    #     if isinstance(route, APIRoute):
-    #         print(f"{route.path} -> {route.name}")
+    from fastapi.routing import APIRoute
+    for route in app.routes:
+        if isinstance(route, APIRoute):
+            print(f"{route.path} -> {route.name}")
 
     yield
 
@@ -40,7 +40,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, root_path="/api")
 app.mount(
-    "/api/static",
+    "/static",  # <- без /api
     StaticFiles(directory="/home/api-aio/.local/lib/python3.12/site-packages/sqladmin/statics"),
     name="static"
 )
