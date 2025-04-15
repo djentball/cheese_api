@@ -38,11 +38,11 @@ async def lifespan(app: FastAPI):
 
     await database.disconnect()
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, root_path="/api")
 app.mount(
-    "/custom-static/admin",
+    "/api/static",
     StaticFiles(directory="/home/api-aio/.local/lib/python3.12/site-packages/sqladmin/statics"),
-    name="static_admin"
+    name="static"
 )
 
 
