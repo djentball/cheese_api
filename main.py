@@ -30,7 +30,11 @@ async def lifespan(app: FastAPI):
     await database.disconnect()
 
 app = FastAPI(lifespan=lifespan)
-# create_tables()
+app.mount(
+    "/custom-static/admin",
+    StaticFiles(directory="/home/api-aio/.local/lib/python3.12/site-packages/sqladmin/statics"),
+    name="static_admin"
+)
 
 
 app.add_middleware(
