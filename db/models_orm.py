@@ -10,7 +10,6 @@ Base = declarative_base()
 
 class Cheese(Base):
     __tablename__ = "cheeses"
-
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     name = Column(String, nullable=False)
     country = Column(String)

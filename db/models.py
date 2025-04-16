@@ -1,3 +1,5 @@
+import uuid
+
 from sqlalchemy import Table, Column, String, Float, Integer, Boolean, ForeignKey
 from db.database import metadata
 
@@ -12,7 +14,7 @@ cheese_table = Table(
     Column("is_pasteurized", Boolean, nullable=False),
     Column("description", String, nullable=True),
     Column("image_url", String),
-    Column("category_id", String, ForeignKey("categories.id"), nullable=False),  # Додаємо ForeignKey
+    Column("category_id", String, ForeignKey("categories.id"), nullable=True),
 )
 
 categories_table = Table(

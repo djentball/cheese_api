@@ -53,9 +53,9 @@ async def update_cheese(cheese_id: str, cheese_data: Cheese):
         update(cheese_table)
         .where(cheese_table.c.id == cheese_id)
         .values(**cheese_dict)
-        .returning(cheese_table)  # Повертаємо оновлений запис
+        .returning(cheese_table)
     )
-    return await database.fetch_one(query)  # Повертаємо оновлений об'єкт
+    return await database.fetch_one(query)
 
 
 async def delete_cheese(cheese_id: str):
