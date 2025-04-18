@@ -1,15 +1,28 @@
-from sqlalchemy import create_engine, MetaData
-from databases import Database
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import MetaData
 
-DATABASE_URL = "sqlite:///./db/cheese.db"
+DATABASE_URL = "sqlite+aiosqlite:///./db/cheese.db"
 
 
-database = Database(DATABASE_URL)
+engine: AsyncEngine = create_async_engine(DATABASE_URL, echo=True)
+
+
+AsyncSessionLocal = sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    future=True,
+)
+
+
 metadata = MetaData()
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-metadata.create_all(engine)
 
+async def create_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(metadata.create_all)
 
-# def create_tables():
-#     metadata.create_all(engine)
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session

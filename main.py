@@ -4,23 +4,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes import cheese, categories, blogs
 import logging
 
-from db.database import database
+from db.database import engine, create_tables, get_db
 from db.models_orm import Base
-from db.database import engine
-
 
 logging.basicConfig(level=logging.INFO)
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
 
-Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await database.connect()
+
+    await create_tables()
 
     yield
 
-    await database.disconnect()
+    await engine.dispose()
 
 app = FastAPI(lifespan=lifespan)
 

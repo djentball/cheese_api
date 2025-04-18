@@ -1,4 +1,3 @@
-
 import uuid
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,7 +31,8 @@ class Category(Base):
     cheeses = relationship("Cheese", back_populates="category")
 
     def __str__(self):
-        return self.name  # 👈 Ось це і є ключовий момент
+        return self.name
+
 
 class Blog(Base):
     __tablename__ = "blogs"
