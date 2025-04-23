@@ -1,6 +1,39 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 import uuid
+
+
+class TokenData(BaseModel):
+    sub: str | None = None
+
+
+class UserResponse(BaseModel):
+    id: str
+    email: str
+    name: str
+
+    class Config:
+        from_attributes = True
+
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+    name: str
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserRead(BaseModel):
+    id: str
+    email: EmailStr
+    name: str
+
+    class Config:
+        from_attributes = True
 
 
 # === BASE ===
@@ -66,13 +99,16 @@ class CategoryBase(BaseModel):
     description: Optional[str] = None
     image_url: Optional[str] = None
 
+
 class CategoryCreate(CategoryBase):
     pass
+
 
 class CategoryUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     image_url: Optional[str] = None
+
 
 class Categories(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -82,6 +118,7 @@ class Categories(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class CategoriesListResponse(BaseModel):
     total: int
@@ -98,14 +135,17 @@ class BlogBase(BaseModel):
     description: Optional[str] = None
     image_url: Optional[str] = None
 
+
 class BlogCreate(BlogBase):
     pass
+
 
 class BlogUpdate(BaseModel):
     name: Optional[str] = None
     short_description: Optional[str] = None
     description: Optional[str] = None
     image_url: Optional[str] = None
+
 
 class Blogs(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -116,6 +156,7 @@ class Blogs(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class BlogsListResponse(BaseModel):
     total: int

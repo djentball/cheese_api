@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from routes import cheese, categories, blogs
+from routes import cheese, categories, blogs, auth
 import logging
 
-from db.database import engine, create_tables, get_db
-from db.models_orm import Base
+from db.database import engine, create_tables
 
 logging.basicConfig(level=logging.INFO)
 uvicorn_access_logger = logging.getLogger("uvicorn.access")
@@ -32,6 +31,7 @@ app.add_middleware(
 )
 
 
+app.include_router(auth.router)
 app.include_router(cheese.router)
 app.include_router(categories.router)
 app.include_router(blogs.router)
