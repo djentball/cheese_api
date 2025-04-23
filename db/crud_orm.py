@@ -106,7 +106,8 @@ async def get_cheeses_by_category(
     cheeses = result.scalars().all()
     print(f"Found cheeses: {cheeses}")
 
-    total_query = select(func.count()).select_from(Cheese).where(Cheese.category_id == category_id)
+    total_query = select(func.count()).select_from(Cheese).where(Cheese.category_id == str(category_id))
+
     print(f"Total count query: {str(total_query)}")
     total_result = await session.execute(total_query)
     total = total_result.scalar()
