@@ -21,7 +21,7 @@ async def create_category(category: CategoryCreate, db: AsyncSession = Depends(g
 
 @router.get("/{category_id}", response_model=Categories)
 async def get_category(category_id: UUID, db: AsyncSession = Depends(get_db)):
-    category = await crud.get_category_by_id(db, category_id)
+    category = await crud.get_category(db, category_id)
     if category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     return category
@@ -29,7 +29,7 @@ async def get_category(category_id: UUID, db: AsyncSession = Depends(get_db)):
 
 @router.put("/{category_id}", response_model=Categories)
 async def update_category(category_id: UUID, category: CategoryUpdate, db: AsyncSession = Depends(get_db)):
-    existing_category = await crud.get_category_by_id(db, category_id)
+    existing_category = await crud.get_category(db, category_id)
     if existing_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
 

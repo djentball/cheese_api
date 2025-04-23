@@ -115,7 +115,6 @@ async def get_cheeses_by_category(
     return total, cheeses
 
 
-
 async def create_blog(session: AsyncSession, blog_data: dict) -> Blog:
     new_blog = Blog(**blog_data)
     session.add(new_blog)
