@@ -125,7 +125,7 @@ async def create_blog(session: AsyncSession, blog_data: dict) -> Blog:
 
 
 async def get_blog(session: AsyncSession, blog_id: UUID) -> Optional[Blog]:
-    result = await session.execute(select(Blog).where(Blog.id == blog_id))
+    result = await session.execute(select(Blog).where(Blog.id == str(blog_id)))
     return result.scalars().first()
 
 
